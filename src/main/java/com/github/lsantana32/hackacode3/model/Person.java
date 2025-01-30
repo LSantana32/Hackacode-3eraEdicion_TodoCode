@@ -1,17 +1,24 @@
 package com.github.lsantana32.hackacode3.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
 @Data
+@MappedSuperclass
 public abstract class Person {
-    private final int id;
-    private final String name;
-    private final String surname;
-    private final String dni;
-    private final String birthday;
-    private final String email;
-    private final String phone;
-    private final String address;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    private String surname;
+    private String dni;
+    private String birthday;
+    private String email;
+    private String phone;
+    private String address;
 
     public Person(int id, String name, String surname, String dni, String birthday, String email, String phone, String address) {
         this.id = id;
@@ -23,4 +30,6 @@ public abstract class Person {
         this.phone = phone;
         this.address = address;
     }
+
+    public Person() {}
 }
