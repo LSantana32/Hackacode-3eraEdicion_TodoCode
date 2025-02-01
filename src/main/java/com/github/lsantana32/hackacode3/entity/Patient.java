@@ -1,27 +1,30 @@
 package com.github.lsantana32.hackacode3.entity;
 
 import com.github.lsantana32.hackacode3.model.Person;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "patients")
+@Data
 public class Patient extends Person {
+    @Column(nullable = false)
     private boolean medicalInsurance;
     @OneToMany(mappedBy = "patient")
     private List<DoctorAppointment> doctorAppointment;
 
-    public Patient(int id, String name, String surname, String dni, String birthday, String email, String phone, String address, boolean medicalInsurance, List<DoctorAppointment> doctorAppointment) {
+    public Patient(int id, String name, String surname, String dni, Date birthday, String email, String phone, String address, boolean medicalInsurance) {
         super(id, name, surname, dni, birthday, email, phone, address);
         this.medicalInsurance = medicalInsurance;
-        this.doctorAppointment = (doctorAppointment==null)?new ArrayList<>():doctorAppointment;
+        this.doctorAppointment = new ArrayList<>();
     }
 
     public Patient() {}
@@ -33,4 +36,5 @@ public class Patient extends Person {
     public void removeDoctorAppointment(DoctorAppointment doctorAppointment){
         this.doctorAppointment.remove(doctorAppointment);
     }
+
 }
