@@ -28,7 +28,7 @@ public class DoctorController {
     @PostMapping
     public ResponseEntity<String> registerDoctor(@RequestBody Doctor doctor) {
         try {
-            doctorService.register(doctor);
+            doctorService.register(doctor.getDni(), doctor);
             return ResponseEntity.ok("Doctor registered successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
@@ -51,6 +51,20 @@ public class DoctorController {
         }
     }
 
+    /**
+     * Get all doctors
+     * Endpoint: /api/doctor
+     * method: GET
+     * example: http://localhost:8080/doctor
+     */
+    @GetMapping
+    public ResponseEntity<Iterable<Doctor>> getAllDoctors() {
+        try {
+            return ResponseEntity.ok(doctorService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
     /**
      * Delete a doctor by ID
      * Endpoint: /api/doctor/{id}

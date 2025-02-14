@@ -1,38 +1,45 @@
 package com.github.lsantana32.hackacode3.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
+import com.github.lsantana32.hackacode3.dao.CustomRepository;
+import com.github.lsantana32.hackacode3.parse.IterableToList;
+import com.github.lsantana32.hackacode3.validator.BaseValidator;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
-    protected final CrudRepository<T, Long> repository;
+    protected final CustomRepository<T> repository;
 
-    protected BaseServiceImpl(CrudRepository<T, Long> repository) {
+    protected BaseServiceImpl(CustomRepository<T> repository) {
         this.repository = repository;
     }
 
     @Override
-    public void register(T entity) {
+    public void register(String dni, T entity) {
+        BaseValidator.validateExistenceByDni(dni, entity, repository);
         repository.save(entity);
     }
 
     @Override
-    public Optional<T> getById(int id) {
-        return repository.findById((long) id);
+    public Optional<T> getById(long id) {
+        BaseValidator.validateExistenceById(id, repository);
+        return repository.findById(id);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
+        BaseValidator.validateExistenceById(id, repository);
         repository.deleteById((long) id);
     }
 
     @Override
-    public void update(int id, T entity) {
-        if (repository.existsById((long) id)) {
-            repository.save(entity);
-        } else {
-            throw new IllegalArgumentException("Entity not found");
-        }
+    public void update(long id, T entity) {
+        BaseValidator.validateExistenceById(id, repository);
+        repository.save(entity);
+    }
+
+    @Override
+    public List<T> getAll() {
+        return IterableToList.convert(repository.findAll());
     }
 }

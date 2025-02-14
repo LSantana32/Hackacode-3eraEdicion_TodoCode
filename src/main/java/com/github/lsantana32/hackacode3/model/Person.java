@@ -14,12 +14,12 @@ import java.util.Date;
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String surname;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String dni;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

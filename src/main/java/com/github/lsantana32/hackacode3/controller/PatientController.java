@@ -28,7 +28,7 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<String> registerPatient(@RequestBody Patient patient) {
         try {
-            patientService.register(patient);
+            patientService.register(patient.getDni(), patient);
             return ResponseEntity.ok("Patient registered successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());

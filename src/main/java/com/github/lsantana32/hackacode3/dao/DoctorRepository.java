@@ -1,8 +1,8 @@
 package com.github.lsantana32.hackacode3.dao;
 
 import com.github.lsantana32.hackacode3.entity.Doctor;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface DoctorRepository extends CrudRepository<Doctor, Long> {
-    Doctor findByDni(String dni);
+@Repository
+public interface DoctorRepository extends CustomRepository<Doctor> {
 }
