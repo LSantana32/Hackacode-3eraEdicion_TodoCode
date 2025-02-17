@@ -1,12 +1,10 @@
 package com.github.lsantana32.hackacode3.entity;
 
 import com.github.lsantana32.hackacode3.model.Person;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +14,7 @@ import java.util.List;
 @Table(name = "patients")
 @Data
 public class Patient extends Person {
-    @Column(nullable = false)
-    private boolean medicalInsurance;
+    private Boolean medicalInsurance;
     @OneToMany(mappedBy = "patient")
     private List<DoctorAppointment> doctorAppointment;
 

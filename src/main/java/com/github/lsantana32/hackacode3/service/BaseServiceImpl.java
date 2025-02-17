@@ -16,6 +16,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public void register(String dni, T entity) {
+        BaseValidator.validateInformation(entity);
         BaseValidator.validateExistenceByDni(dni, entity, repository);
         repository.save(entity);
     }

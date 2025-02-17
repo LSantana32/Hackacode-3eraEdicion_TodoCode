@@ -30,7 +30,6 @@ public abstract class Person {
     private String email;
     @Column(nullable = false)
     private String phone;
-    @Column(nullable = false)
     private String address;
 
     public Person(int id, String name, String surname, String dni, Date birthday, String email, String phone, String address) {

@@ -18,19 +18,17 @@ import java.util.List;
 @Getter
 @Setter
 public class Doctor extends Person {
-    @Column(nullable = false)
     private String speciality;
     @ElementCollection
     private List<Date> availability;
-    @Column(nullable = false)
-    private double salary;
+    private Double salary;
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<DoctorAppointment> doctorAppointment;
 
     public Doctor(int id, String name, String surname, String dni, Date birthday, String email, String phone, String address, String speciality, List<Date> availability, double salary, List<DoctorAppointment> doctorAppointment) {
         super(id, name, surname, dni, birthday, email, phone, address);
         this.speciality = speciality;
-        this.availability = availability;
+        this.availability = (availability==null)?new ArrayList<>():availability;
         this.salary = salary;
         this.doctorAppointment = (doctorAppointment==null)?new ArrayList<>():doctorAppointment;
     }
