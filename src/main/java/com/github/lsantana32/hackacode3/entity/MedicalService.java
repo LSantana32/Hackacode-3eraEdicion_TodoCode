@@ -1,5 +1,6 @@
 package com.github.lsantana32.hackacode3.entity;
 
+import com.github.lsantana32.hackacode3.enums.TypeOfMedicalService;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,16 +10,19 @@ import lombok.Data;
 public class MedicalService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int id;
+    private long id;
+    @Enumerated(EnumType.STRING)
+    private TypeOfMedicalService type;
     private String name;
     private String description;
-    private double price;
+    private Double price;
     @ManyToOne
     @JoinColumn(name = "service_package_fk")
     private ServicePackage servicePackage;
 
-    public MedicalService(int id, String name, String description, double price, ServicePackage servicePackage) {
+    public MedicalService(int id, TypeOfMedicalService type, String name, String description, double price, ServicePackage servicePackage) {
         this.id = id;
+        this.type = type;
         this.name = name;
         this.description = description;
         this.price = price;
