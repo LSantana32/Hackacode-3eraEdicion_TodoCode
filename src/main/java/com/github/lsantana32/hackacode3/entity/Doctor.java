@@ -25,7 +25,7 @@ public class Doctor extends Person {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<DoctorAppointment> doctorAppointment;
 
-    public Doctor(int id, String name, String surname, String dni, Date birthday, String email, String phone, String address, String speciality, List<Date> availability, double salary, List<DoctorAppointment> doctorAppointment) {
+    public Doctor(int id, String name, String surname, String dni, Date birthday, String email, String phone, String address, String speciality, List<Date> availability, Double salary, List<DoctorAppointment> doctorAppointment) {
         super(id, name, surname, dni, birthday, email, phone, address);
         this.speciality = speciality;
         this.availability = (availability==null)?new ArrayList<>():availability;

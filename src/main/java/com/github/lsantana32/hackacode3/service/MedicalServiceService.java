@@ -23,27 +23,28 @@ public class MedicalServiceService {
     }
 
     public void register(MedicalService medicalService) {
-        MedicalServiceValidator.validateInformation(medicalService);
+        MedicalServiceValidator.validateFields(medicalService, "id", "servicePackage");
         MedicalServiceValidator.validateNotExistenceByNameAndType(medicalService.getName(), medicalService.getType(), medicalServiceRepository);
         medicalServiceRepository.save(medicalService);
     }
 
     public void update(long id, MedicalService medicalServiceNew) {
-        MedicalServiceValidator.validateInformation(medicalServiceNew);
-        MedicalServiceValidator.validateExistenceById(id, medicalServiceRepository);
-        MedicalServiceValidator.validateNotExistenceByNameAndType(medicalServiceNew.getName(), medicalServiceNew.getType(), medicalServiceRepository);
+        MedicalServiceValidator.validateFields(medicalServiceNew, "id", "servicePackage");
+        MedicalServiceValidator.validateExistenceById(id, medicalServiceRepository, MedicalService.class);
+        //see the commented line below
+        //MedicalServiceValidator.validateNotExistenceByNameAndType(medicalServiceNew.getName(), medicalServiceNew.getType(), medicalServiceRepository);
         MedicalService medicalService = findById(id);
         MedicalServiceSetter.setMedicalService(medicalService, medicalServiceNew);
         medicalServiceRepository.save(medicalService);
     }
 
     public void delete(long id) {
-        MedicalServiceValidator.validateExistenceById(id, medicalServiceRepository);
+        MedicalServiceValidator.validateExistenceById(id, medicalServiceRepository, MedicalService.class);
         medicalServiceRepository.deleteById(id);
     }
 
     public Optional<MedicalService> getById(Long id) {
-        MedicalServiceValidator.validateExistenceById(id, medicalServiceRepository);
+        MedicalServiceValidator.validateExistenceById(id, medicalServiceRepository, MedicalService.class);
         return medicalServiceRepository.findById(id);
     }
 

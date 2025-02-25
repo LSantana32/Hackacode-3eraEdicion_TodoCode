@@ -11,11 +11,11 @@ import java.util.List;
 public class ServicePackage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int id;
-    @OneToMany(mappedBy = "servicePackage", cascade = CascadeType.ALL)
+    private long id;
+    @OneToMany(mappedBy = "servicePackage")
     private List<MedicalService> services;
-    private double price;
-    private boolean medicalInsurancePatient;
+    private Double price;
+    private Boolean medicalInsurancePatient;
     @OneToMany(mappedBy = "servicePackage")
     private List<DoctorAppointment> doctorAppointment;
 

@@ -8,5 +8,6 @@ public interface MedicalServiceSetter {
         medicalService.setPrice(newMedicalService.getPrice());
         medicalService.setType(newMedicalService.getType());
         medicalService.setDescription(newMedicalService.getDescription());
+        medicalService.setServicePackage(newMedicalService.getServicePackage());
     }
 }

@@ -17,7 +17,7 @@ public class MedicalService {
     private String description;
     private Double price;
     @ManyToOne
-    @JoinColumn(name = "service_package_fk")
+    @JoinColumn(name = "servicePakageID")
     private ServicePackage servicePackage;
 
     public MedicalService(int id, TypeOfMedicalService type, String name, String description, double price, ServicePackage servicePackage) {
