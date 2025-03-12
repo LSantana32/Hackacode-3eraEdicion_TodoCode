@@ -17,6 +17,12 @@ public class MedicalServiceController {
     /**
      * Register a new medical service
      * @param medicalService
+     * keys:
+     *    type;
+     *    name;
+     *    description;
+     *    price;
+     *    servicePackage;
      */
     @PostMapping
     public ResponseEntity<String> registerMedicalService(@RequestBody MedicalService medicalService) {

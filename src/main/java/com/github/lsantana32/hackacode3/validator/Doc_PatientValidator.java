@@ -1,6 +1,7 @@
 package com.github.lsantana32.hackacode3.validator;
 
 import com.github.lsantana32.hackacode3.dao.CustomRepository;
+import com.github.lsantana32.hackacode3.exception.InvalidEmailException;
 import jakarta.persistence.EntityExistsException;
 
 import java.lang.reflect.Field;
@@ -35,7 +36,18 @@ public class Doc_PatientValidator {
                 continue;
             }
             field.setAccessible(true);
+            verifyEmail(field, entity);
             validateField(entity, field);
+        }
+    }
+
+    private static <T> void verifyEmail(Field field, T entity) {
+        try {
+            if (field.getName().equals("email") && !field.get(entity).toString().contains("@")) {
+                throw new InvalidEmailException("Invalid email");
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 

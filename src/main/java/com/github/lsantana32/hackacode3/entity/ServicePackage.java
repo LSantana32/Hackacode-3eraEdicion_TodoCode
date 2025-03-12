@@ -9,40 +9,40 @@ import java.util.List;
 @Entity
 @Table(name = "service_packages")
 public class ServicePackage {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(mappedBy = "servicePackage")
-    private List<MedicalService> services;
     private Double price;
     private Boolean medicalInsurancePatient;
-    @OneToMany(mappedBy = "servicePackage")
-    private List<DoctorAppointment> doctorAppointment;
+    @ManyToMany
+    @JoinTable(
+            name = "service_packages_services",
+            joinColumns = @JoinColumn(name = "service_package_fk"),
+            inverseJoinColumns = @JoinColumn(name = "service_fk")
+    )
+    private List<MedicalService> services;
 
-    public ServicePackage(int id, List<MedicalService> services, boolean medicalInsurancePatient, List<DoctorAppointment> doctorAppointment) {
+    public ServicePackage(int id, List<MedicalService> services, boolean medicalInsurancePatient) {
         this.id = id;
         this.services = services;
         this.medicalInsurancePatient = medicalInsurancePatient;
-        this.price = services.stream().mapToDouble(MedicalService::getPrice).sum()*(0.85-0.20*(medicalInsurancePatient?1:0));
-        this.doctorAppointment = (doctorAppointment==null)?new ArrayList<>():doctorAppointment;
     }
 
-    public ServicePackage() {
-    }
+    public ServicePackage() {}
 
-    public double getPrice(){
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price){
-        this.price = price;
+    public void setPrice(Double priceServices) {
+        this.price = priceServices * (0.85 - 0.20 * (medicalInsurancePatient ? 1 : 0));
     }
 
-    public void addDoctorAppointment(DoctorAppointment doctorAppointment){
-        this.doctorAppointment.add(doctorAppointment);
+    public void addServices(List<MedicalService> medicalServices) {
+        services.addAll(medicalServices);
     }
 
-    public void removeDoctorAppointment(DoctorAppointment doctorAppointment){
-        this.doctorAppointment.remove(doctorAppointment);
+    public Double getPriceFromServices() {
+        return services.stream().mapToDouble(MedicalService::getPrice).sum();
     }
 }

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PatientService extends BaseServiceImpl<Patient> {
+public class PatientPersonService extends BasePersonServiceImpl<Patient> {
     @Autowired
-    public PatientService(PatientRepository patientRepository) {
+    public PatientPersonService(PatientRepository patientRepository) {
         super(patientRepository);
     }
 }

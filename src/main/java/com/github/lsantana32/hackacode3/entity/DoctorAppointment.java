@@ -1,7 +1,10 @@
 package com.github.lsantana32.hackacode3.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalTime;
 import java.util.Date;
 @Data
@@ -10,8 +13,14 @@ import java.util.Date;
 public class DoctorAppointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private Date date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    @DateTimeFormat(pattern = "HH:mm")
+    @Temporal(TemporalType.TIME)
     private LocalTime time;
     @ManyToOne
     @JoinColumn(name = "doctor_fk")
@@ -20,10 +29,10 @@ public class DoctorAppointment {
     @JoinColumn(name = "patient_fk")
     private Patient patient;
     @ManyToOne
-    @JoinColumn(name = "service_package_fk")
+    @PrimaryKeyJoinColumn
     private ServicePackage servicePackage;
-    private double price;
-    private boolean paid;
+    private Double price;
+    private Boolean paid;
 
     public DoctorAppointment(int id, Date date, LocalTime time, Doctor doctor, Patient patient, ServicePackage servicePackage, boolean paid) {
         this.id = id;
@@ -38,6 +47,5 @@ public class DoctorAppointment {
 
 
     public DoctorAppointment() {}
-
 
 }

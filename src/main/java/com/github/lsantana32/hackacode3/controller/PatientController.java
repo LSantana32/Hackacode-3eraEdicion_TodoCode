@@ -1,7 +1,7 @@
 package com.github.lsantana32.hackacode3.controller;
 
 import com.github.lsantana32.hackacode3.entity.Patient;
-import com.github.lsantana32.hackacode3.service.PatientService;
+import com.github.lsantana32.hackacode3.service.PatientPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
-    private final PatientService patientService;
+    private final PatientPersonService patientService;
 
     @Autowired
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientPersonService patientService) {
         this.patientService = patientService;
     }
 
@@ -24,6 +24,16 @@ public class PatientController {
      * method: POST
      * example: http://localhost:8080/patient -H 'Content-Type: application/json' -d '{"name": "John Doe", "dni": "123456789"}'
      * @param patient
+     * keys:
+     *    name
+     *    surname
+     *    dni
+     *    birthday
+     *    email
+     *    phone
+     *    address
+     *    medicalInsurance
+     *    doctorAppointment (add from doctorAppointment)
      */
     @PostMapping
     public ResponseEntity<String> registerPatient(@RequestBody Patient patient) {

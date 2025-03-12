@@ -1,9 +1,7 @@
 package com.github.lsantana32.hackacode3.entity;
 
 import com.github.lsantana32.hackacode3.model.Person;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.Date;

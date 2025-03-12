@@ -17,6 +17,11 @@ public class ServicePackageController {
     /**
      * Register a new service package
      * @param servicePackage
+     * keys:
+     *     services (add from medicalService)
+     *     price
+     *     medicalInsurancePatient
+     *     doctorAppointment (add from doctorAppointment)
      */
     @PostMapping
     public ResponseEntity<String> registerServicePackage(@RequestBody ServicePackage servicePackage) {

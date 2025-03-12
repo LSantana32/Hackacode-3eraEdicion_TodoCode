@@ -53,4 +53,11 @@ public abstract class Person {
         if (dni.length() != 8) {throw new IllegalArgumentException("DNI must have 8 digits");}
         this.dni = dni;
     }
+
+    public void setPhone(String phone){
+        if (phone.length() != 8) {throw new IllegalArgumentException("Phone must have 8 digits");}
+        this.phone = phone;
+    }
+
+
 }

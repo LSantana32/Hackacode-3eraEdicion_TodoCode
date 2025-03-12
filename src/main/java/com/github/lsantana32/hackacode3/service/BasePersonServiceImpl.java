@@ -12,10 +12,10 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseServiceImpl<T> implements BaseService<T> {
+public abstract class BasePersonServiceImpl<T> implements BasePersonService<T> {
     protected final CustomRepository<T> repository;
 
-    protected BaseServiceImpl(CustomRepository<T> repository) {
+    protected BasePersonServiceImpl(CustomRepository<T> repository) {
         this.repository = repository;
     }
 
@@ -49,9 +49,9 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     private void setAccordingToEntity(T entity, T entityNew) {
         if (entity instanceof Patient){
-            PatientSetter.setPatient((Patient) entity, (Patient) entityNew);
+            PatientSetter.set((Patient) entity, (Patient) entityNew);
         } else if (entity instanceof Doctor){
-            DoctorSetter.setDoctor((Doctor) entity, (Doctor) entityNew);
+            DoctorSetter.set((Doctor) entity, (Doctor) entityNew);
         } else {
             throw new IllegalArgumentException("Entity not found");
         }

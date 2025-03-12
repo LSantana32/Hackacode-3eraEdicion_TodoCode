@@ -34,7 +34,7 @@ public class MedicalServiceService {
         //see the commented line below
         //MedicalServiceValidator.validateNotExistenceByNameAndType(medicalServiceNew.getName(), medicalServiceNew.getType(), medicalServiceRepository);
         MedicalService medicalService = findById(id);
-        MedicalServiceSetter.setMedicalService(medicalService, medicalServiceNew);
+        MedicalServiceSetter.set(medicalService, medicalServiceNew);
         medicalServiceRepository.save(medicalService);
     }
 
@@ -54,5 +54,13 @@ public class MedicalServiceService {
 
     public MedicalService findById(Long id) {
         return medicalServiceRepository.findById(id).orElseThrow(() -> new MedicalServiceNotFoundException(id));
+    }
+
+    public Double getPriceFromServices(List<MedicalService> services) {
+        double price=0.0;
+        for (MedicalService service : services) {
+            price+=findById(service.getId()).getPrice();
+        }
+        return price;
     }
 }

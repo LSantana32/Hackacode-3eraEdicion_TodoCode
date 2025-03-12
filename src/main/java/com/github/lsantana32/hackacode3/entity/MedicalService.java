@@ -16,17 +16,13 @@ public class MedicalService {
     private String name;
     private String description;
     private Double price;
-    @ManyToOne
-    @JoinColumn(name = "servicePakageID")
-    private ServicePackage servicePackage;
 
-    public MedicalService(int id, TypeOfMedicalService type, String name, String description, double price, ServicePackage servicePackage) {
+    public MedicalService(int id, TypeOfMedicalService type, String name, String description, double price) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.servicePackage = servicePackage;
     }
 
     public MedicalService() {

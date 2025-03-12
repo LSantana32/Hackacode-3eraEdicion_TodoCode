@@ -14,24 +14,28 @@ import java.util.Optional;
 @Service
 public class ServicePackageService {
     ServicePackageRepository servicePackageRepository;
+    MedicalServiceService medicalServiceService;
 
     @Autowired
-    public ServicePackageService(ServicePackageRepository servicePackageRepository) {
+    public ServicePackageService(ServicePackageRepository servicePackageRepository, MedicalServiceService medicalServiceService) {
         this.servicePackageRepository = servicePackageRepository;
+        this.medicalServiceService = medicalServiceService;
     }
 
     public void register(ServicePackage servicePackage) {
+
+        servicePackage.setPrice(medicalServiceService.getPriceFromServices(servicePackage.getServices()));
         ServicePackageValidator.validateFields(servicePackage, "doctorAppointment", "services");
         // i will done the validation field per field later
         servicePackageRepository.save(servicePackage);
-    }
+}
 
     public void update(long id, ServicePackage servicePackageNew) {
         ServicePackageValidator.validateFields(servicePackageNew, "doctorAppointment");
         ServicePackageValidator.validateExistenceById(id, servicePackageRepository, ServicePackage.class);
         // i will done the validation field per field later
         ServicePackage servicePackage = findById(id);
-        ServicePackageSetter.setServicePackage(servicePackage, servicePackageNew);
+        ServicePackageSetter.set(servicePackage, servicePackageNew);
         servicePackageRepository.save(servicePackage);
     }
 
@@ -51,5 +55,9 @@ public class ServicePackageService {
 
     public ServicePackage findById(Long id) {
         return servicePackageRepository.findById(id).orElseThrow(() -> new MedicalServiceNotFoundException(id));
+    }
+
+    public Double getPriceFromPackage(ServicePackage servicePackage) {
+        return findById(servicePackage.getId()).getPrice();
     }
 }
