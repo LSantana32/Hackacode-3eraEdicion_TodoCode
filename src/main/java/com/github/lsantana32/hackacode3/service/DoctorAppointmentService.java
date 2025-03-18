@@ -3,6 +3,7 @@ package com.github.lsantana32.hackacode3.service;
 import com.github.lsantana32.hackacode3.Setter.ServicePackageSetter;
 import com.github.lsantana32.hackacode3.dao.DoctorAppointmentRepository;
 import com.github.lsantana32.hackacode3.entity.DoctorAppointment;
+import com.github.lsantana32.hackacode3.entity.Patient;
 import com.github.lsantana32.hackacode3.parse.IterableToList;
 import com.github.lsantana32.hackacode3.validator.DoctorAppointmentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,18 @@ import java.util.Optional;
 public class DoctorAppointmentService {
     private DoctorAppointmentRepository doctorAppointmentRepository;
     private ServicePackageService servicePackageService;
+    private PatientPersonService patientPersonService;
 
     @Autowired
-    public DoctorAppointmentService(DoctorAppointmentRepository doctorAppointmentRepository, ServicePackageService servicePackageService) {
+    public DoctorAppointmentService(DoctorAppointmentRepository doctorAppointmentRepository, ServicePackageService servicePackageService, PatientPersonService patientPersonService) {
         this.doctorAppointmentRepository = doctorAppointmentRepository;
         this.servicePackageService = servicePackageService;
+        this.patientPersonService = patientPersonService;
     }
     public void register(DoctorAppointment doctorAppointment) {
-        doctorAppointment.setPrice(servicePackageService.getPriceFromPackage(doctorAppointment.getServicePackage()));
-        DoctorAppointmentValidator.validateFields(doctorAppointment, "price");
-        doctorAppointmentRepository.save(DoctorAppointmentSetter.setPrice(doctorAppointment));
+        doctorAppointment.setPrice(servicePackagePrice(doctorAppointment) * discountOfMedicalInsurance(doctorAppointment.getPatient().getId()));
+        DoctorAppointmentValidator.validateFields(doctorAppointment, "servicePackage");
+        doctorAppointmentRepository.save(doctorAppointment);
     }
 
     public void delete(long id) {
@@ -48,5 +51,14 @@ public class DoctorAppointmentService {
         DoctorAppointment doctorAppointmentToUpdate = doctorAppointmentRepository.findById(id).get();
         DoctorAppointmentSetter.set(doctorAppointmentToUpdate, doctorAppointment);
         doctorAppointmentRepository.save(doctorAppointmentToUpdate);
+    }
+
+    public Double servicePackagePrice (DoctorAppointment doctorAppointment) {
+        return servicePackageService.getPriceFromPackage(doctorAppointment.getServicePackage());
+    }
+
+    public Double discountOfMedicalInsurance (Long idPatient) {
+        Patient patient = patientPersonService.getById(idPatient).get();
+        return (patient.getMedicalInsurance())?0.80 : 1;
     }
 }

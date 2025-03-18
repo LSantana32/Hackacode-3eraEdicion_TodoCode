@@ -8,8 +8,10 @@ import java.lang.reflect.Field;
 
 public abstract class BaseValidator {
 
+
     public static <T> void validateFields(T entity, String ...fieldsToIgnore) {
         for (Field field : entity.getClass().getDeclaredFields()){
+            System.out.println("Validating field: " + field.getName());
             if (isOneOfTheseFields(field, fieldsToIgnore)){
                 continue;
             }

@@ -13,7 +13,6 @@ public class ServicePackage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Double price;
-    private Boolean medicalInsurancePatient;
     @ManyToMany
     @JoinTable(
             name = "service_packages_services",
@@ -22,10 +21,9 @@ public class ServicePackage {
     )
     private List<MedicalService> services;
 
-    public ServicePackage(int id, List<MedicalService> services, boolean medicalInsurancePatient) {
+    public ServicePackage(int id, List<MedicalService> services) {
         this.id = id;
         this.services = services;
-        this.medicalInsurancePatient = medicalInsurancePatient;
     }
 
     public ServicePackage() {}
@@ -35,7 +33,7 @@ public class ServicePackage {
     }
 
     public void setPrice(Double priceServices) {
-        this.price = priceServices * (0.85 - 0.20 * (medicalInsurancePatient ? 1 : 0));
+        this.price = priceServices * 0.85;
     }
 
     public void addServices(List<MedicalService> medicalServices) {

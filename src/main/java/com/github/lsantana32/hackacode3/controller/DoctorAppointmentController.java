@@ -27,6 +27,8 @@ public class DoctorAppointmentController {
      *   servicePackage;
      *   price paid
      */
+
+    // PONER EL DESCUENTO ADICIONAL DEL SEGURO MEDICO EN CITA MEDICA, SACARLO DE SERVICEPACKAGE Y PONERLO EN DOCTORAPPOINTMENT. GOTY MAAAAL
     @PostMapping
     public ResponseEntity<String> registerDoctorAppointment(@RequestBody DoctorAppointment doctorAppointment) {
         try {
